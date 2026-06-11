@@ -1,0 +1,1224 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>MB POST — Summer 2026</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=DM+Sans:wght@300;400;500&family=DM+Mono:wght@400&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --sand: #F2EBE0;
+    --toast: #C9A97A;
+    --espresso: #2A1F14;
+    --sage: #7A9E7E;
+    --blush: #E8C4B0;
+    --sky: #8FB8C9;
+    --cream: #FAF6F0;
+    --ink: #1C1410;
+    --mid: #6B5C4E;
+    --rule: #D4C9BB;
+  }
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    background: var(--cream);
+    color: var(--ink);
+    font-family: 'DM Sans', sans-serif;
+    font-weight: 300;
+    line-height: 1.6;
+  }
+
+  /* ── HEADER ── */
+  header {
+    background: var(--espresso);
+    padding: 48px 24px 40px;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+  }
+  header::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(ellipse at 30% 80%, rgba(201,169,122,.18) 0%, transparent 60%),
+                radial-gradient(ellipse at 80% 20%, rgba(143,184,201,.12) 0%, transparent 55%);
+    pointer-events: none;
+  }
+  .header-eyebrow {
+    font-family: 'DM Mono', monospace;
+    font-size: 11px;
+    letter-spacing: .18em;
+    text-transform: uppercase;
+    color: var(--toast);
+    margin-bottom: 12px;
+  }
+  header h1 {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(2.6rem, 7vw, 4.8rem);
+    font-weight: 700;
+    color: var(--sand);
+    line-height: 1.1;
+    margin-bottom: 8px;
+  }
+  header h1 em {
+    color: var(--toast);
+    font-style: italic;
+  }
+  .header-sub {
+    font-family: 'DM Mono', monospace;
+    font-size: 12px;
+    letter-spacing: .14em;
+    color: var(--blush);
+    opacity: .7;
+    margin-top: 16px;
+  }
+
+  /* ── NAV TABS ── */
+  nav {
+    background: var(--espresso);
+    border-top: 1px solid rgba(255,255,255,.08);
+    display: flex;
+    justify-content: center;
+    gap: 4px;
+    padding: 0 16px 16px;
+    flex-wrap: wrap;
+  }
+  nav button {
+    background: transparent;
+    border: 1px solid rgba(201,169,122,.35);
+    border-radius: 3px;
+    color: var(--sand);
+    cursor: pointer;
+    font-family: 'DM Mono', monospace;
+    font-size: 11px;
+    letter-spacing: .1em;
+    padding: 8px 16px;
+    text-transform: uppercase;
+    transition: background .18s, border-color .18s, color .18s;
+  }
+  nav button:hover, nav button.active {
+    background: var(--toast);
+    border-color: var(--toast);
+    color: var(--espresso);
+  }
+
+  /* ── GRID CONTAINER ── */
+  main {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 40px 20px 80px;
+  }
+
+  .section-label {
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    letter-spacing: .22em;
+    text-transform: uppercase;
+    color: var(--toast);
+    margin-bottom: 24px;
+    padding-bottom: 10px;
+    border-bottom: 1px solid var(--rule);
+  }
+
+  .grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+    gap: 24px;
+    margin-bottom: 56px;
+  }
+
+  /* ── CARD ── */
+  .card {
+    background: #fff;
+    border-radius: 6px;
+    border: 1px solid var(--rule);
+    overflow: hidden;
+    transition: box-shadow .2s, transform .2s;
+    cursor: pointer;
+  }
+  .card:hover { box-shadow: 0 8px 32px rgba(42,31,20,.1); transform: translateY(-2px); }
+
+  .card-header {
+    padding: 20px 20px 0;
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 8px;
+  }
+  .card-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.15rem;
+    font-weight: 700;
+    line-height: 1.25;
+    color: var(--espresso);
+    flex: 1;
+  }
+  .card-price {
+    font-family: 'DM Mono', monospace;
+    font-size: 13px;
+    color: var(--toast);
+    font-weight: 400;
+    white-space: nowrap;
+    margin-top: 2px;
+  }
+
+  .card-sub {
+    padding: 4px 20px 0;
+    font-size: 12px;
+    color: var(--mid);
+    font-style: italic;
+    line-height: 1.4;
+  }
+
+  .card-tags {
+    padding: 10px 20px 0;
+    display: flex;
+    gap: 6px;
+    flex-wrap: wrap;
+  }
+  .tag {
+    font-family: 'DM Mono', monospace;
+    font-size: 9px;
+    letter-spacing: .1em;
+    text-transform: uppercase;
+    padding: 3px 8px;
+    border-radius: 2px;
+    background: var(--sand);
+    color: var(--mid);
+    border: 1px solid var(--rule);
+  }
+  .tag.section { background: var(--espresso); color: var(--sand); border-color: var(--espresso); }
+  .tag.replacing { background: var(--blush); color: #7A3A28; border-color: #D4A890; }
+  .tag.mark { background: #EEF3EE; color: #3A6B40; border-color: #B0CDB3; }
+
+  .card-divider { height: 1px; background: var(--rule); margin: 14px 20px 0; }
+
+  /* expandable body */
+  .card-body {
+    padding: 14px 20px 20px;
+  }
+
+  .expand-btn {
+    width: 100%;
+    background: none;
+    border: none;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 10px 20px;
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    letter-spacing: .12em;
+    text-transform: uppercase;
+    color: var(--mid);
+    border-top: 1px solid var(--rule);
+    transition: color .15s;
+  }
+  .expand-btn:hover { color: var(--espresso); }
+  .expand-btn svg { transition: transform .22s; }
+  .expand-btn.open svg { transform: rotate(180deg); }
+
+  .expandable {
+    display: none;
+    padding: 0 20px 20px;
+  }
+  .expandable.open { display: block; }
+
+  /* sections inside card */
+  .detail-section { margin-bottom: 16px; }
+  .detail-section:last-child { margin-bottom: 0; }
+  .detail-label {
+    font-family: 'DM Mono', monospace;
+    font-size: 9px;
+    letter-spacing: .18em;
+    text-transform: uppercase;
+    color: var(--toast);
+    margin-bottom: 6px;
+  }
+  .detail-text {
+    font-size: 13px;
+    color: var(--ink);
+    line-height: 1.65;
+  }
+  .detail-text p { margin-bottom: 8px; }
+  .detail-text p:last-child { margin-bottom: 0; }
+
+  /* highlight pills for star ingredients */
+  .highlight {
+    display: inline;
+    background: linear-gradient(180deg, transparent 55%, rgba(201,169,122,.35) 55%);
+    font-weight: 500;
+  }
+
+  /* allergen chips */
+  .allergen-list { display: flex; flex-wrap: wrap; gap: 6px; }
+  .allergen-chip {
+    font-family: 'DM Mono', monospace;
+    font-size: 9px;
+    letter-spacing: .08em;
+    text-transform: uppercase;
+    padding: 3px 8px 3px 6px;
+    border-radius: 2px;
+    border: 1px solid;
+    display: flex;
+    align-items: center;
+    gap: 4px;
+  }
+  .allergen-chip .dot { width: 5px; height: 5px; border-radius: 50%; }
+  .chip-no   { background: #FDF0EE; color: #9B3220; border-color: #F0C4BC; }
+  .chip-no .dot { background: #C0392B; }
+  .chip-yes  { background: #EFF4EF; color: #2D6A35; border-color: #B5D1B8; }
+  .chip-yes .dot { background: #27AE60; }
+  .chip-sos  { background: #FEF9EC; color: #7A5C0A; border-color: #F0DFA0; }
+  .chip-sos .dot { background: #E0A800; }
+
+  /* cocktail specific */
+  .ingredients-table { width: 100%; border-collapse: collapse; font-size: 12px; }
+  .ingredients-table th {
+    font-family: 'DM Mono', monospace;
+    font-size: 9px;
+    letter-spacing: .12em;
+    text-transform: uppercase;
+    color: var(--mid);
+    text-align: left;
+    padding: 4px 8px 4px 0;
+    border-bottom: 1px solid var(--rule);
+  }
+  .ingredients-table td {
+    padding: 5px 8px 5px 0;
+    border-bottom: 1px solid var(--sand);
+    color: var(--ink);
+    vertical-align: top;
+  }
+  .ingredients-table tr:last-child td { border-bottom: none; }
+  .amt { font-family: 'DM Mono', monospace; color: var(--toast); font-size: 11px; white-space: nowrap; }
+
+  .soul-text {
+    font-size: 12.5px;
+    font-style: italic;
+    color: var(--mid);
+    line-height: 1.7;
+    padding: 10px 12px;
+    border-left: 2px solid var(--toast);
+    background: var(--sand);
+    border-radius: 0 4px 4px 0;
+    margin-bottom: 14px;
+  }
+
+  /* ── HIDDEN STATE ── */
+  .section-block { display: none; }
+  .section-block.visible { display: block; }
+
+  /* ── FOOTER ── */
+  footer {
+    text-align: center;
+    padding: 32px 16px;
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    letter-spacing: .12em;
+    color: var(--mid);
+    border-top: 1px solid var(--rule);
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="header-eyebrow">MB Post · Manhattan Beach</div>
+  <h1>Summer <em>2026</em></h1>
+  <div class="header-sub">FOH Reference Guide · Launches June 11</div>
+</header>
+
+<nav>
+  <button class="active" onclick="showSection('all', this)">All Items</button>
+  <button onclick="showSection('cocktails', this)">Cocktails</button>
+  <button onclick="showSection('appetizer', this)">Appetizers</button>
+  <button onclick="showSection('entree', this)">Entrées</button>
+  <button onclick="showSection('pasta', this)">Pasta</button>
+  <button onclick="showSection('brunch', this)">Brunch</button>
+  <button onclick="showSection('dessert', this)">Dessert</button>
+</nav>
+
+<main>
+
+<!-- ═══════════════════════════════ COCKTAILS ═══════════════════════════════ -->
+<div class="section-block visible" data-category="cocktails" id="sec-cocktails">
+  <div class="section-label">New Cocktails</div>
+  <div class="grid">
+
+    <!-- BELL-ISSIMO -->
+    <div class="card" data-category="cocktails">
+      <div class="card-header">
+        <div class="card-title">Bell-Issimo!!!</div>
+        <div class="card-price">$17</div>
+      </div>
+      <div class="card-sub">Savory Martini · Coupe · Replacing The Basilica</div>
+      <div class="card-tags">
+        <span class="tag section">Martini</span>
+        <span class="tag mark">Prairie Vodka</span>
+        <span class="tag replacing">↩ The Basilica</span>
+      </div>
+      <div class="card-body">
+        <div class="soul-text">"Bright, crisp and unapologetically fresh… a savory martini that turns the humble bell pepper into the star of the glass."</div>
+        <div class="detail-section">
+          <div class="detail-label">Build</div>
+          <table class="ingredients-table">
+            <tr><th>Ingredient</th><th>Amount</th></tr>
+            <tr><td><span class="highlight">Prairie Vodka</span></td><td class="amt">2.5 oz</td></tr>
+            <tr><td>Dolin Dry</td><td class="amt">0.5 oz</td></tr>
+            <tr><td><span class="highlight">Pickled Bell Pepper Brine</span></td><td class="amt">1 oz</td></tr>
+          </table>
+        </div>
+      </div>
+      <button class="expand-btn" onclick="toggleCard(this)">
+        Prep Details + Garnish <svg width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M2 4l4 4 4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </button>
+      <div class="expandable">
+        <div class="detail-section">
+          <div class="detail-label">Method</div>
+          <div class="detail-text">Add all ingredients to shaker → add ice → double strain into coupe → garnish with skewered pickled bell pepper.</div>
+        </div>
+        <div class="detail-section">
+          <div class="detail-label">Pickled Bell Pepper Brine</div>
+          <div class="detail-text">Red bell pepper (400g), water (16g), rice wine vinegar (8g), white sugar (50g), kosher salt (25g). Combine in pot → bring to boil → simmer 8 min → cool 10 min → store in deli container. <strong>DO NOT DISCARD PEPPERS</strong> — used for garnish.</div>
+        </div>
+        <div class="detail-section">
+          <div class="detail-label">Garnish</div>
+          <div class="detail-text">Cocktail pick through pickled red bell pepper strips.</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- PEACH PLEASE -->
+    <div class="card" data-category="cocktails">
+      <div class="card-header">
+        <div class="card-title">Peach, Please!</div>
+        <div class="card-price">$17</div>
+      </div>
+      <div class="card-sub">Negroni · Rocks Glass · Replacing My Name is Earl</div>
+      <div class="card-tags">
+        <span class="tag section">Negroni</span>
+        <span class="tag mark">Manly Gin</span>
+        <span class="tag replacing">↩ My Name is Earl</span>
+      </div>
+      <div class="card-body">
+        <div class="soul-text">"Stone fruit meets the depth of traditional aperitivo culture… confident, slightly irreverent, unmistakably modern."</div>
+        <div class="detail-section">
+          <div class="detail-label">Build</div>
+          <table class="ingredients-table">
+            <tr><th>Ingredient</th><th>Amount</th></tr>
+            <tr><td><span class="highlight">Peach Tea Manly Gin</span></td><td class="amt">1 oz</td></tr>
+            <tr><td>Combier Peach Liqueur</td><td class="amt">0.25 oz</td></tr>
+            <tr><td>Campari</td><td class="amt">0.5 oz</td></tr>
+            <tr><td>Lillet Blanc</td><td class="amt">0.5 oz</td></tr>
+            <tr><td>Saline Solution</td><td class="amt">1 sleeve</td></tr>
+          </table>
+        </div>
+      </div>
+      <button class="expand-btn" onclick="toggleCard(this)">
+        Prep Details + Garnish <svg width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M2 4l4 4 4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </button>
+      <div class="expandable">
+        <div class="detail-section">
+          <div class="detail-label">Method</div>
+          <div class="detail-text">Combine all ingredients in mixing glass → add ice → stir 30 seconds → strain over rocks glass with big rock → express lemon peel → garnish.</div>
+        </div>
+        <div class="detail-section">
+          <div class="detail-label">Peach Tea Gin Infusion</div>
+          <div class="detail-text">Pour 1 bottle Manly Gin into deli cup → add 6 peach tea bags → label, date, store at room temp → infuse 24 hrs → remove bags → pour into bottle → label and store in walk-in or bar fridge.</div>
+        </div>
+        <div class="detail-section">
+          <div class="detail-label">Garnish</div>
+          <div class="detail-text">Express lemon peel over drink and lay over ice. Cocktail pick through a Peach Ring gummy, place over glass.</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- I GOT THE BLUES -->
+    <div class="card" data-category="cocktails">
+      <div class="card-header">
+        <div class="card-title">I Got The Blues</div>
+        <div class="card-price">$17</div>
+      </div>
+      <div class="card-sub">Sour · Coupe · Replacing Cherry Styles</div>
+      <div class="card-tags">
+        <span class="tag section">Sour</span>
+        <span class="tag mark">Buffalo Trace Bourbon</span>
+        <span class="tag replacing">↩ Cherry Styles</span>
+      </div>
+      <div class="card-body">
+        <div class="soul-text">"Inspired by the classic Rolling Stones ballad… bright citrus, rich bourbon, light floral aromas and ripe blueberry."</div>
+        <div class="detail-section">
+          <div class="detail-label">Build</div>
+          <table class="ingredients-table">
+            <tr><th>Ingredient</th><th>Amount</th></tr>
+            <tr><td><span class="highlight">Buffalo Trace Bourbon</span></td><td class="amt">2 oz</td></tr>
+            <tr><td>Egg White</td><td class="amt">1 oz</td></tr>
+            <tr><td>Lemon Juice</td><td class="amt">0.75 oz</td></tr>
+            <tr><td><span class="highlight">Blueberry Thyme Syrup</span></td><td class="amt">0.75 oz</td></tr>
+            <tr><td>Crème de Violette</td><td class="amt">1 tbsp</td></tr>
+            <tr><td>Peychaud's Bitters</td><td class="amt">5 dashes</td></tr>
+          </table>
+        </div>
+      </div>
+      <button class="expand-btn" onclick="toggleCard(this)">
+        Prep Details + Garnish <svg width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M2 4l4 4 4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </button>
+      <div class="expandable">
+        <div class="detail-section">
+          <div class="detail-label">Method</div>
+          <div class="detail-text">Add first 5 ingredients to shaker → dry shake 10 sec → open, add ice → shake 5 sec → double strain into coupe → add 5 dashes Peychaud's on the right side → 3 blueberries on pick as garnish.</div>
+        </div>
+        <div class="detail-section">
+          <div class="detail-label">Blueberry Thyme Syrup</div>
+          <div class="detail-text">Blueberry puree (20 oz), sugar (20 oz), water (20 oz), thyme (1 oz). Simmer all ingredients 10 min → cool 10 min → strain out thyme → label, date, store in walk-in.</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- DO THE DEW -->
+    <div class="card" data-category="cocktails">
+      <div class="card-header">
+        <div class="card-title">Do the Dew</div>
+        <div class="card-price">$17</div>
+      </div>
+      <div class="card-sub">Daiquiri · Coupe · Replacing You're Kiwing Me Smalls</div>
+      <div class="card-tags">
+        <span class="tag section">Daiquiri</span>
+        <span class="tag mark">Saison Rum</span>
+        <span class="tag replacing">↩ You're Kiwing Me Smalls</span>
+      </div>
+      <div class="card-body">
+        <div class="soul-text">"A crisp honeydew daiquiri… cheekily inspired by the famous slogan and neon hue, but far more grown up. Also inspired by Chef James's love for the Baja Blast."</div>
+        <div class="detail-section">
+          <div class="detail-label">Build</div>
+          <table class="ingredients-table">
+            <tr><th>Ingredient</th><th>Amount</th></tr>
+            <tr><td><span class="highlight">HoneyDew Saison Rum</span></td><td class="amt">2 oz</td></tr>
+            <tr><td>Lime Juice</td><td class="amt">0.5 oz</td></tr>
+            <tr><td>Melon Liqueur</td><td class="amt">0.5 oz</td></tr>
+            <tr><td>Simple Syrup</td><td class="amt">0.25 oz</td></tr>
+            <tr><td>Saline Solution</td><td class="amt">1 sleeve</td></tr>
+          </table>
+        </div>
+      </div>
+      <button class="expand-btn" onclick="toggleCard(this)">
+        Prep Details + Garnish <svg width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M2 4l4 4 4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </button>
+      <div class="expandable">
+        <div class="detail-section">
+          <div class="detail-label">Method</div>
+          <div class="detail-text">Add all ingredients to shaker → add ice → shake → strain into coupe → garnish with Tajin melon ball.</div>
+        </div>
+        <div class="detail-section">
+          <div class="detail-label">HoneyDew Saison Rum Infusion</div>
+          <div class="detail-text">Chop 1 honeydew (~1000g) into cubes, remove seeds → place in small cambro → pour 1 bottle Saison Rum over cubes → immersion blend to puree → line chinois with coffee filter then 4-layer cheesecloth → pour mixture slowly, let gravity filter (up to 1 hour+) — <strong>DO NOT PRESS</strong> → label, date, store in bar fridge.</div>
+        </div>
+        <div class="detail-section">
+          <div class="detail-label">Garnish</div>
+          <div class="detail-text">Tajin-dusted melon ball.</div>
+        </div>
+      </div>
+    </div>
+
+  </div><!-- /grid cocktails -->
+</div><!-- /cocktails block -->
+
+
+<!-- ═══════════════════════════════ APPETIZERS ═══════════════════════════════ -->
+<div class="section-block visible" data-category="appetizer" id="sec-appetizer">
+  <div class="section-label">New Appetizers</div>
+  <div class="grid">
+
+    <!-- SUMMER MARKET TOMATO -->
+    <div class="card" data-category="appetizer">
+      <div class="card-header">
+        <div class="card-title">Summer Market Tomato</div>
+        <div class="card-price">$18</div>
+      </div>
+      <div class="card-sub">Market tomato, charred scallion crème, bayou delta butter, focaccia, basil</div>
+      <div class="card-tags">
+        <span class="tag section">Appetizer</span>
+        <span class="tag mark">🥄 Spoon</span>
+        <span class="tag replacing">↩ Asparagus</span>
+      </div>
+      <div class="card-body">
+        <div class="detail-section">
+          <div class="detail-label">Key Components</div>
+          <div class="detail-text">
+            <p><span class="highlight">Charred Scallion Crème</span> — whipped crème fraîche + Greek yogurt, grilled charred scallions, white miso, Worcestershire, lime juice + zest. Smoky, tangy, airy.</p>
+            <p><span class="highlight">Bayou Delta Butter</span> — bacon fat + butter base (bagna cauda technique), minced garlic + anchovies, thyme + oregano, lemon, ACV, Crystal hot sauce, Cajun seasoning. Rich, Southern depth.</p>
+            <p>Garnished with basil oil, basil leaves, radish. Served with focaccia chunks.</p>
+          </div>
+        </div>
+        <div class="detail-section">
+          <div class="detail-label">Allergens</div>
+          <div class="allergen-list">
+            <span class="allergen-chip chip-yes"><span class="dot"></span>GLUTEN (focaccia) — yes</span>
+            <span class="allergen-chip chip-sos"><span class="dot"></span>ALLIUM — yes, sos</span>
+            <span class="allergen-chip chip-sos"><span class="dot"></span>DAIRY — yes, sos</span>
+          </div>
+        </div>
+      </div>
+      <button class="expand-btn" onclick="toggleCard(this)">
+        Ingredient Notes <svg width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M2 4l4 4 4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </button>
+      <div class="expandable">
+        <div class="detail-section">
+          <div class="detail-label">White Miso</div>
+          <div class="detail-text">Mild, lightly fermented soybean paste — shorter fermentation than darker miso gives lighter color, sweeter flavor, less salt. Dissolves easily into sauces.</div>
+        </div>
+        <div class="detail-section">
+          <div class="detail-label">Anchovies</div>
+          <div class="detail-text">Small oily fish, salt-cured. Intense savory, briny flavor with strong umami. When cooked into fat, dissolve completely — adds depth, not "fishiness."</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- LIVER MOUSSE -->
+    <div class="card" data-category="appetizer">
+      <div class="card-header">
+        <div class="card-title">Jidori Chicken Liver Mousse</div>
+        <div class="card-price">$18</div>
+      </div>
+      <div class="card-sub">Strawberry Preserves, Opal Basil, Japanese Milk Bread</div>
+      <div class="card-tags">
+        <span class="tag section">Appetizer</span>
+        <span class="tag mark">🔪 Knife</span>
+        <span class="tag replacing">↩ Tuna Tartare</span>
+      </div>
+      <div class="card-body">
+        <div class="detail-section">
+          <div class="detail-label">Production Highlights</div>
+          <div class="detail-text">
+            <p>Livers cured overnight with <span class="highlight">pink curing salt (TCM)</span> — seasons throughout, holds deep rosy color.</p>
+            <p>Cooked gently in <span class="highlight">duck fat</span> with onion + garlic, pulled at mid-rare. Deglazed with brandy → cream, thyme, allspice, nutmeg, maple syrup → blended mounting with butter → passed through a tamis for perfect smoothness.</p>
+            <p><span class="highlight">Strawberry Preserves</span>: fresh strawberries cooked down with sugar, finished with lemon. Bright, jammy, chunky.</p>
+            <p>Garnish: roasted peanuts, sesame seeds, opal basil.</p>
+          </div>
+        </div>
+        <div class="detail-section">
+          <div class="detail-label">Allergens</div>
+          <div class="allergen-list">
+            <span class="allergen-chip chip-no"><span class="dot"></span>GLUTEN (bread) — no</span>
+            <span class="allergen-chip chip-no"><span class="dot"></span>ALLIUM — no</span>
+            <span class="allergen-chip chip-no"><span class="dot"></span>DAIRY — no</span>
+            <span class="allergen-chip chip-no"><span class="dot"></span>EGG (milk bread) — no</span>
+            <span class="allergen-chip chip-yes"><span class="dot"></span>NUTS (garnish + sesame) — yes</span>
+          </div>
+        </div>
+      </div>
+      <button class="expand-btn" onclick="toggleCard(this)">
+        Ingredient Notes <svg width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M2 4l4 4 4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </button>
+      <div class="expandable">
+        <div class="detail-section">
+          <div class="detail-label">Japanese Milk Bread</div>
+          <div class="detail-text">Made using <strong>tangzhong</strong> technique — part of the flour cooked with milk to create a paste before mixing. Gives signature pillowy, slightly sweet texture.</div>
+        </div>
+        <div class="detail-section">
+          <div class="detail-label">Opal Basil</div>
+          <div class="detail-text">Deep purple leaves, more robust than sweet basil. Herbal, peppery, mildly clove-like with subtle sweetness and light anise aroma.</div>
+        </div>
+        <div class="detail-section">
+          <div class="detail-label">Jidori Chicken</div>
+          <div class="detail-text">Premium heritage breed. Organ meat is rich, smooth, deeply savory — cooked mid-rare to stay tender and creamy rather than grainy.</div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+
+<!-- ═══════════════════════════════ ENTRÉES ═══════════════════════════════ -->
+<div class="section-block visible" data-category="entree" id="sec-entree">
+  <div class="section-label">New Entrées</div>
+  <div class="grid">
+
+    <!-- SCALLOP CORN -->
+    <div class="card" data-category="entree">
+      <div class="card-header">
+        <div class="card-title">Seared Hokkaido Scallops</div>
+        <div class="card-price">$44</div>
+      </div>
+      <div class="card-sub">Sweet Corn Purée, Summer Garden Succotash, Tasso Ham Relish</div>
+      <div class="card-tags">
+        <span class="tag section">Entrée</span>
+        <span class="tag mark">🍴 Fork</span>
+        <span class="tag replacing">↩ Scallop Sunchoke</span>
+      </div>
+      <div class="card-body">
+        <div class="detail-section">
+          <div class="detail-label">Production Highlights</div>
+          <div class="detail-text">
+            <p><span class="highlight">Hokkaido Scallops</span> — seasoned with salt, seared on plancha for golden crust both sides, warm center. Premium wild-caught from Japan's cold northern waters, sashimi-grade.</p>
+            <p><span class="highlight">Corn Purée</span> — cobs roasted in butter + salt wrapped in foil until golden. Kernels blended with butter + water to velvety smoothness. Corn from the <strong>Brentwood area of CA's Sacramento River Delta</strong> — available June–early September, sweetest corn they've found.</p>
+            <p><span class="highlight">Summer Garden Succotash</span> — seared patty pan squash, blanched romano beans, sweet corn, sungold tomatoes. Sautéed in olive oil + salt on pickup, finished with fresh basil.</p>
+            <p><span class="highlight">Tasso Ham Relish</span> — pancetta + tasso ham finely chopped, rendered until slightly crispy. Fat used to sweat diced onion + garlic. Finished with lemon zest, lemon juice, sherry vinegar.</p>
+          </div>
+        </div>
+        <div class="detail-section">
+          <div class="detail-label">Allergens</div>
+          <div class="allergen-list">
+            <span class="allergen-chip chip-yes"><span class="dot"></span>ALLIUM (relish + succotash) — yes (better with both)</span>
+            <span class="allergen-chip chip-yes"><span class="dot"></span>DAIRY (corn purée) — yes (big part of dish)</span>
+            <span class="allergen-chip chip-no"><span class="dot"></span>SHELLFISH — no</span>
+          </div>
+        </div>
+      </div>
+      <button class="expand-btn" onclick="toggleCard(this)">
+        Ingredient Notes <svg width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M2 4l4 4 4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </button>
+      <div class="expandable">
+        <div class="detail-section">
+          <div class="detail-label">Tasso Ham</div>
+          <div class="detail-text">Spicy, smoky, salty Cajun cured pork shoulder (not leg). Salt-cured, heavily seasoned with Cajun spices, smoked. Used as flavor agent — intense, ideal for adding depth.</div>
+        </div>
+        <div class="detail-section">
+          <div class="detail-label">Patty Pan Squash</div>
+          <div class="detail-text">Small, flattened summer squash (looks like a flying saucer). Cucurbita pepo family — same species as zucchini. Pale green to yellow, tender edible skin, mild + slightly sweet flesh.</div>
+        </div>
+        <div class="detail-section">
+          <div class="detail-label">Succotash</div>
+          <div class="detail-text">Traditional American dish with Native American roots. Originally corn + lima beans; modern versions include tomatoes, peppers, okra. Can be served warm or cold.</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- SALMON EGGPLANT -->
+    <div class="card" data-category="entree">
+      <div class="card-header">
+        <div class="card-title">Grilled Atlantic Salmon</div>
+        <div class="card-price">$35</div>
+      </div>
+      <div class="card-sub">San Marzano Tomato Braised Romano Beans, Smoky Eggplant Purée</div>
+      <div class="card-tags">
+        <span class="tag section">Specials</span>
+        <span class="tag mark">🍴 Fork</span>
+        <span class="tag replacing">↩ Buttered Atlantic Salmon</span>
+      </div>
+      <div class="card-body">
+        <div class="detail-section">
+          <div class="detail-label">Production Highlights</div>
+          <div class="detail-text">
+            <p><span class="highlight">Salmon</span> — seasoned with salt, grilled over white oak to medium.</p>
+            <p><span class="highlight">Braised Romano Beans</span> — blanched + shocked to hold color, braised in light tomato sauce (EVOO, garlic, San Marzano tomatoes, lemon zest, basil) on pickup.</p>
+            <p><span class="highlight">Smoky Eggplant Purée</span> — eggplant charred on grill until skin blistered and insides tender + smoky. Interior scooped into food processor with tahini, roasted garlic, salt → blended with EVOO until rich, smokey purée.</p>
+            <p><span class="highlight">Gremolata</span> — blanched Italian parsley, basil, oregano, mint shocked in ice water. Blended with garlic, lemon zest, salt, EVOO → bright green herbaceous sauce to top salmon.</p>
+          </div>
+        </div>
+        <div class="detail-section">
+          <div class="detail-label">Allergens</div>
+          <div class="allergen-list">
+            <span class="allergen-chip chip-no"><span class="dot"></span>ALLIUM (beans, eggplant, gremolata) — no, throughout</span>
+          </div>
+        </div>
+      </div>
+      <button class="expand-btn" onclick="toggleCard(this)">
+        Ingredient Notes <svg width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M2 4l4 4 4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </button>
+      <div class="expandable">
+        <div class="detail-section">
+          <div class="detail-label">San Marzano Tomatoes</div>
+          <div class="detail-text">Italian plum tomato — meaty, low-moisture, ideal for sauces. Deep red, rich flavor.</div>
+        </div>
+        <div class="detail-section">
+          <div class="detail-label">Romano Beans</div>
+          <div class="detail-text">Flat, broad Italian string bean. Heartier texture than green beans, holds up to longer cooking. Absorbs flavors well.</div>
+        </div>
+        <div class="detail-section">
+          <div class="detail-label">Gremolata</div>
+          <div class="detail-text">Fresh Italian condiment of parsley, lemon zest, garlic. Traditionally served with osso buco. Ours is made into a sauce with olive oil — adds bright, fresh contrast to rich components.</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- EGGPLANT PARMESAN -->
+    <div class="card" data-category="entree">
+      <div class="card-header">
+        <div class="card-title">Eggplant Parmesan</div>
+        <div class="card-price">$28</div>
+      </div>
+      <div class="card-sub">Pomodoro Sugo, Mozzarella, Sweet Italian Basil</div>
+      <div class="card-tags">
+        <span class="tag section">Entrée</span>
+        <span class="tag mark">🔪 Knife</span>
+        <span class="tag replacing">↩ Cauliflower</span>
+      </div>
+      <div class="card-body">
+        <div class="detail-section">
+          <div class="detail-label">Production Highlights</div>
+          <div class="detail-text">
+            <p>Eggplant sliced 1 inch → salted 30 min to extract moisture → pat dry → toss with olive oil, salt, minced garlic → roast 350°F 20 min → cool → sandwich two slices with mozzarella inside → bread: flour → egg → panko → fry at 350°F.</p>
+            <p><span class="highlight">Pomodoro Sauce</span> — sweat onion, garlic, red fresno chile → pureed canned tomato + tomato paste + bouquet garni (thyme, basil, oregano, rosemary, bay) → simmer until slightly reduced → remove herbs → hand blend.</p>
+          </div>
+        </div>
+        <div class="detail-section">
+          <div class="detail-label">Allergens</div>
+          <div class="allergen-list">
+            <span class="allergen-chip chip-no"><span class="dot"></span>GLUTEN — no</span>
+            <span class="allergen-chip chip-no"><span class="dot"></span>ALLIUM — no</span>
+            <span class="allergen-chip chip-no"><span class="dot"></span>DAIRY — no</span>
+            <span class="allergen-chip chip-no"><span class="dot"></span>EGG — no</span>
+          </div>
+        </div>
+      </div>
+      <button class="expand-btn" onclick="toggleCard(this)">
+        Ingredient Notes <svg width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M2 4l4 4 4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </button>
+      <div class="expandable">
+        <div class="detail-section">
+          <div class="detail-label">Pomodoro</div>
+          <div class="detail-text">Translates to "golden apple" in Italian — name comes from the golden-yellow color of the tomatoes used (like San Marzanos). Tends to be thicker than marinara due to crushed tomatoes.</div>
+        </div>
+        <div class="detail-section">
+          <div class="detail-label">Mozzarella</div>
+          <div class="detail-text">Fresh Italian cheese — soft, delicate, mild and slightly milky. Prized for moisture, stretch, and melt.</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- BRANZINO -->
+    <div class="card" data-category="entree">
+      <div class="card-header">
+        <div class="card-title">Branzino</div>
+        <div class="card-price">$36</div>
+      </div>
+      <div class="card-sub">Grilled over white oak, lacquered in Italian salsa verde — Wednesday Nightly Special</div>
+      <div class="card-tags">
+        <span class="tag section">Daily Special</span>
+        <span class="tag mark">🥄 Spoon</span>
+        <span class="tag replacing">↩ Duck Leg</span>
+      </div>
+      <div class="card-body">
+        <div class="detail-section">
+          <div class="detail-label">Production Highlights</div>
+          <div class="detail-text">
+            <p>Butterflied + mostly deboned, fins removed. Flesh scored to absorb flavor, brushed with <span class="highlight">green adobo</span> to marinate. Grill starts skin side down, continuously brushed with sauce while cooking. <strong>May still have small bones</strong> — whole fish presentation.</p>
+            <p><span class="highlight">Salsa Verde / Green Adobo</span> — garlic, shallot, jalapeño + capers blended to smooth paste → cilantro + parsley + lime juice + touch of vinegar → stream in olive oil to emulsify → kept cold to hold color → finished with mayo, salt, black pepper. Creamy, herb-forward, citrusy, slightly briny.</p>
+            <p><span class="highlight">Pickled Shallot Rings</span> — shallots thinly sliced, pickled in red wine with sugar, lime juice, salt. Lightly sweet, tangy, bright.</p>
+          </div>
+        </div>
+        <div class="detail-section">
+          <div class="detail-label">Allergens</div>
+          <div class="allergen-list">
+            <span class="allergen-chip chip-no"><span class="dot"></span>ALLIUM (sauce) — no, fish is marinated</span>
+            <span class="allergen-chip chip-no"><span class="dot"></span>EGG (sauce/mayo) — no, fish is marinated</span>
+          </div>
+        </div>
+      </div>
+      <button class="expand-btn" onclick="toggleCard(this)">
+        Ingredient Notes <svg width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M2 4l4 4 4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </button>
+      <div class="expandable">
+        <div class="detail-section">
+          <div class="detail-label">Branzino</div>
+          <div class="detail-text">Mediterranean sea bass — light, flaky texture, mild + slightly sweet flavor. Not overly "fishy," very approachable even for guests who don't usually order seafood.</div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+
+<!-- ═══════════════════════════════ PASTA ═══════════════════════════════ -->
+<div class="section-block visible" data-category="pasta" id="sec-pasta">
+  <div class="section-label">New Pasta</div>
+  <div class="grid">
+
+    <!-- LOBSTER RISOTTO -->
+    <div class="card" data-category="pasta">
+      <div class="card-header">
+        <div class="card-title">Atlantic Lobster &amp; Sweet Corn Risotto</div>
+        <div class="card-price">$44</div>
+      </div>
+      <div class="card-sub">Creamy Carnaroli Rice, Poblano Pepper Butter, Parmigiano Reggiano</div>
+      <div class="card-tags">
+        <span class="tag section">Pasta</span>
+        <span class="tag mark">🥄 Spoon</span>
+        <span class="tag replacing">↩ Current Risotto</span>
+      </div>
+      <div class="card-body">
+        <div class="detail-section">
+          <div class="detail-label">Production Highlights</div>
+          <div class="detail-text">
+            <p>Stock made from corn cob, white wine, onion, thyme + bay leaf → strained + reduced to concentrate. Garlic + onion sweated → <span class="highlight">Carnaroli rice</span> toasted → hot corn stock added in waves, constantly stirred → mounted with butter + Parmigiano Reggiano on pickup.</p>
+            <p><span class="highlight">Herb Butter</span> — tempered butter folded with chopped chives, parsley + roasted poblano.</p>
+            <p>Corn roasted and cooked in butter. Corn sourced from <strong>Brentwood area, Sacramento River Delta</strong> — June through early September.</p>
+          </div>
+        </div>
+        <div class="detail-section">
+          <div class="detail-label">Allergens</div>
+          <div class="allergen-list">
+            <span class="allergen-chip chip-no"><span class="dot"></span>ALLIUM (rice) — no</span>
+            <span class="allergen-chip chip-no"><span class="dot"></span>DAIRY (rice/lobster) — no</span>
+            <span class="allergen-chip chip-yes"><span class="dot"></span>SHELLFISH (lobster) — yes</span>
+          </div>
+        </div>
+      </div>
+      <button class="expand-btn" onclick="toggleCard(this)">
+        Ingredient Notes <svg width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M2 4l4 4 4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </button>
+      <div class="expandable">
+        <div class="detail-section">
+          <div class="detail-label">Carnaroli Rice</div>
+          <div class="detail-text">"King of risotto" — long-grain Italian variety, cross of Vialone + Lencino. High starch, resistant to overcooking. Produces creamy yet firm risotto with distinct grains that absorb flavors beautifully.</div>
+        </div>
+        <div class="detail-section">
+          <div class="detail-label">Poblano Pepper</div>
+          <div class="detail-text">Mild Mexican pepper — deep green, earthy + slightly smoky with subtle sweetness. More flavorful than green bell pepper, much less spicy than jalapeño.</div>
+        </div>
+        <div class="detail-section">
+          <div class="detail-label">Atlantic Lobster</div>
+          <div class="detail-text">Cold-water shellfish — sweet, rich, delicate with tender but slightly firm texture. Buttery and clean-tasting, especially in tail and claw. More refined sweetness and luxurious mouthfeel than other shellfish.</div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+
+<!-- ═══════════════════════════════ BRUNCH ═══════════════════════════════ -->
+<div class="section-block visible" data-category="brunch" id="sec-brunch">
+  <div class="section-label">New Brunch Items</div>
+  <div class="grid">
+
+    <!-- GRAIN BOWL -->
+    <div class="card" data-category="brunch">
+      <div class="card-header">
+        <div class="card-title">Mediterranean Grain Bowl</div>
+        <div class="card-price">$18</div>
+      </div>
+      <div class="card-sub">White Quinoa Salad, Lemon Tahini, Watercress, Avocado, Poached Eggs, Feta, Chili Crunch</div>
+      <div class="card-tags">
+        <span class="tag section">Brunchables</span>
+        <span class="tag mark">🥄 Spoon</span>
+        <span class="tag replacing">↩ New Item</span>
+      </div>
+      <div class="card-body">
+        <div class="detail-section">
+          <div class="detail-label">Production Highlights</div>
+          <div class="detail-text">
+            <p><span class="highlight">White Quinoa</span> — simmered in veggie stock with whole onion + bay leaf. Fluffed with parsley, mint, olive oil, salt. Herbaceous, light, clean finish. <em>Gluten-free grain.</em></p>
+            <p><span class="highlight">Lemon Tahini Dressing</span> — creamy + bright. Tahini richness, maple syrup sweetness, fresh lemon juice, garlic, warm water to emulsify into smooth velvety dressing.</p>
+            <p><span class="highlight">MBP Chili Crunch</span> — slowly cooked garlic + shallots in oil, layered with chili flake, finished with soy sauce, sesame seeds, sugar + salt. Rich umami, crispy texture, gentle sweetness, lingering spice.</p>
+            <p>Finished with fresh tomato, cucumber, sliced radish, watercress, avocado, feta.</p>
+          </div>
+        </div>
+        <div class="detail-section">
+          <div class="detail-label">Allergens</div>
+          <div class="allergen-list">
+            <span class="allergen-chip chip-sos"><span class="dot"></span>GLUTEN (quinoa) — yes (base of dish)</span>
+            <span class="allergen-chip chip-yes"><span class="dot"></span>SOY (chili crunch) — yes</span>
+            <span class="allergen-chip chip-no"><span class="dot"></span>ALLIUM (quinoa) — no on quinoa</span>
+            <span class="allergen-chip chip-yes"><span class="dot"></span>DAIRY (feta) — yes</span>
+            <span class="allergen-chip chip-yes"><span class="dot"></span>EGG — yes</span>
+          </div>
+        </div>
+      </div>
+      <button class="expand-btn" onclick="toggleCard(this)">
+        Ingredient Notes + Story <svg width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M2 4l4 4 4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </button>
+      <div class="expandable">
+        <div class="detail-section">
+          <div class="detail-label">Quinoa Story</div>
+          <div class="detail-text">Native to the Andean region (Bolivia, Ecuador, Chile, Peru). Charlie Trotter's — the restaurant Chef David is an alumnus of — helped popularize quinoa in the '90s as one of the first fine dining restaurants to feature it on a tasting menu.</div>
+        </div>
+        <div class="detail-section">
+          <div class="detail-label">Tahini</div>
+          <div class="detail-text">Smooth paste from ground toasted sesame seeds. Rich, nutty, slightly earthy — creamy texture similar to natural nut butter.</div>
+        </div>
+        <div class="detail-section">
+          <div class="detail-label">Watercress</div>
+          <div class="detail-text">Leafy green with fresh, peppery flavor similar to arugula or mustard greens. Tender stems, small rounded leaves, crisp and delicate.</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- CHICKEN FRIED STEAK -->
+    <div class="card" data-category="brunch">
+      <div class="card-header">
+        <div class="card-title">Chicken Fried Steak &amp; Country Gravy</div>
+        <div class="card-price">$38</div>
+      </div>
+      <div class="card-sub">RR Ranch NY Steak, Tangy Black Pepper Gravy, Sunny-Side Up Egg</div>
+      <div class="card-tags">
+        <span class="tag section">Brunch</span>
+        <span class="tag mark">🔪 Knife</span>
+        <span class="tag replacing">↩ New (was Add-On)</span>
+      </div>
+      <div class="card-body">
+        <div class="detail-section">
+          <div class="detail-label">Production Highlights</div>
+          <div class="detail-text">
+            <p><span class="highlight">NY Steak</span> — marinated in buttermilk. Dredge: AP flour + potato starch (for crispness) + onion powder, garlic powder, black pepper, cayenne, thyme, salt, sugar.</p>
+            <p><span class="highlight">Country Gravy</span> — classic white gravy from butter + flour roux, whisked with milk until smooth + creamy. Seasoned with salt + black pepper, finished with maple syrup (sweetness) + Tabasco (subtle heat). Rich, savory, little sweetness, gentle kick on the back end.</p>
+          </div>
+        </div>
+        <div class="detail-section">
+          <div class="detail-label">Allergens</div>
+          <div class="allergen-list">
+            <span class="allergen-chip chip-no"><span class="dot"></span>GLUTEN (steak, gravy) — no</span>
+            <span class="allergen-chip chip-sos"><span class="dot"></span>ALLIUM — chives can be omitted, breading has garlic</span>
+            <span class="allergen-chip chip-no"><span class="dot"></span>DAIRY — no</span>
+            <span class="allergen-chip chip-yes"><span class="dot"></span>EGG — yes</span>
+          </div>
+        </div>
+      </div>
+      <button class="expand-btn" onclick="toggleCard(this)">
+        Ingredient Notes + Story <svg width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M2 4l4 4 4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </button>
+      <div class="expandable">
+        <div class="detail-section">
+          <div class="detail-label">CFS History</div>
+          <div class="detail-text">Southern dish with roots in German Wiener Schnitzel. When German immigrants settled in Texas, they swapped veal for beef — turned it into the comfort food staple it is today.</div>
+        </div>
+        <div class="detail-section">
+          <div class="detail-label">NY Strip (Short Loin)</div>
+          <div class="detail-text">Cut from the short loin — tender with firm bite and good marbling. Not as fatty as ribeye but really flavorful. Nice sear outside, juicy beefy center when cooked right.</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- SHRIMP AND GRITS -->
+    <div class="card" data-category="brunch">
+      <div class="card-header">
+        <div class="card-title">Wild Mexican Shrimp &amp; Grits</div>
+        <div class="card-price">$22</div>
+      </div>
+      <div class="card-sub">Sunny Side Up Egg, Nueske's Bacon Sofrito, Buttered Wild Mexican Shrimp, Creamy Grits</div>
+      <div class="card-tags">
+        <span class="tag section">Brunchables</span>
+        <span class="tag mark">🥄 Spoon</span>
+        <span class="tag replacing">↩ New Item</span>
+      </div>
+      <div class="card-body">
+        <div class="detail-section">
+          <div class="detail-label">Production Highlights</div>
+          <div class="detail-text">
+            <p><span class="highlight">Grits</span> — sauté garlic + onion until tender → add water, milk, cream, butter → bring to boil → add grits → cook until tender + creamy.</p>
+            <p><span class="highlight">Sofrito Sauce</span> — sauté onion, red bell peppers, garlic, celery until tender → add Cajun spice + tomato sauce → simmer to bright yet rich tomato sauce.</p>
+            <p><span class="highlight">Wild Mexican Shrimp</span> — sautéed with garlic butter until almost cooked → add sofrito sauce to coat.</p>
+          </div>
+        </div>
+        <div class="detail-section">
+          <div class="detail-label">Allergens</div>
+          <div class="allergen-list">
+            <span class="allergen-chip chip-no"><span class="dot"></span>ALLIUM (grits + sofrito) — no</span>
+            <span class="allergen-chip chip-no"><span class="dot"></span>DAIRY (grits + prawns) — no</span>
+            <span class="allergen-chip chip-yes"><span class="dot"></span>EGG — yes</span>
+            <span class="allergen-chip chip-no"><span class="dot"></span>SHELLFISH — no</span>
+          </div>
+        </div>
+      </div>
+      <button class="expand-btn" onclick="toggleCard(this)">
+        Ingredient Notes <svg width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M2 4l4 4 4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </button>
+      <div class="expandable">
+        <div class="detail-section">
+          <div class="detail-label">Wild Mexican Shrimp</div>
+          <div class="detail-text">Premium wild-caught from the Pacific coast (notably Sea of Cortez). Sweet, firm, briny. Large, low-moisture, often preservative-free. Available in white, blue, and brown varieties.</div>
+        </div>
+        <div class="detail-section">
+          <div class="detail-label">Sofrito</div>
+          <div class="detail-text">Aromatic base used in Hispanic, Caribbean + Mediterranean cuisines. Puerto Rican versions: cilantro + culantro. Spanish: tomatoes + paprika. Cuban: may include ham. MBP version is Cajun-inflected.</div>
+        </div>
+        <div class="detail-section">
+          <div class="detail-label">Grits</div>
+          <div class="detail-text">Southern staple from ground dried corn (hominy or dent corn). Creamy, porridge-like when cooked. Versatile — stone-ground to instant. MBP version enriched with milk, cream + butter.</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- PEACH FRENCH TOAST -->
+    <div class="card" data-category="brunch">
+      <div class="card-header">
+        <div class="card-title">Bourbon Peach Pecan French Toast</div>
+        <div class="card-price">$18</div>
+      </div>
+      <div class="card-sub">Sweet Peach Custard, Toasted Pecans</div>
+      <div class="card-tags">
+        <span class="tag section">Brunchables</span>
+        <span class="tag mark">🍴 Fork</span>
+        <span class="tag replacing">↩ New Item</span>
+      </div>
+      <div class="card-body">
+        <div class="detail-section">
+          <div class="detail-label">Production Highlights</div>
+          <div class="detail-text">
+            <p><span class="highlight">French Toast</span> — milk bread soaked in egg, milk, cream, vanilla, cinnamon, nutmeg, sugar for at least 2 hours. Coated in crushed <span class="highlight">corn flakes</span> for crust → sautéed in butter both sides → finish in oven.</p>
+            <p><span class="highlight">Bourbon Caramel Sauce</span> — brown sugar + water brought to simmer → bourbon added off flame to burn off some alcohol → cinnamon + vanilla extract → butter blended in to emulsify.</p>
+            <p><span class="highlight">Sweet Peach Custard</span> — peach purée heated with sugar + pectin until thickened.</p>
+          </div>
+        </div>
+        <div class="detail-section">
+          <div class="detail-label">Allergens</div>
+          <div class="allergen-list">
+            <span class="allergen-chip chip-no"><span class="dot"></span>GLUTEN (milk bread) — no</span>
+            <span class="allergen-chip chip-no"><span class="dot"></span>DAIRY (custard + toast) — no</span>
+            <span class="allergen-chip chip-no"><span class="dot"></span>EGG — no</span>
+            <span class="allergen-chip chip-yes"><span class="dot"></span>NUTS (pecans) — yes</span>
+          </div>
+        </div>
+      </div>
+      <button class="expand-btn" onclick="toggleCard(this)">
+        Ingredient Notes + Story <svg width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M2 4l4 4 4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </button>
+      <div class="expandable">
+        <div class="detail-section">
+          <div class="detail-label">French Toast History</div>
+          <div class="detail-text">The French did not invent French toast — Americans named it after French immigrants who popularized it here. First recorded recipe comes from Rome around 300 A.D. (Apicius's cookbook). The French themselves historically called it "Roman Bread." Many countries call it "lost bread" as a way to use stale bread without wasting it.</div>
+        </div>
+        <div class="detail-section">
+          <div class="detail-label">Pecans</div>
+          <div class="detail-text">Highly nutritious nuts — monounsaturated fats, fiber, 19+ vitamins and minerals including vitamin E + zinc. Support heart health, aid blood sugar control. Primarily grown in Georgia, New Mexico, Texas.</div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+
+<!-- ═══════════════════════════════ DESSERT ═══════════════════════════════ -->
+<div class="section-block visible" data-category="dessert" id="sec-dessert">
+  <div class="section-label">New Desserts</div>
+  <div class="grid">
+
+    <!-- BUDINO -->
+    <div class="card" data-category="dessert">
+      <div class="card-header">
+        <div class="card-title">Butterscotch Budino</div>
+        <div class="card-price">$15</div>
+      </div>
+      <div class="card-sub">Caramelized White Chocolate Custard, Brown Butter Caramel, Vanilla Cream, Brown Butter Macadamia Nuts</div>
+      <div class="card-tags">
+        <span class="tag section">Spoonful of Sugar</span>
+        <span class="tag mark">🥄 Spoon</span>
+        <span class="tag replacing">↩ S'mores Sundae</span>
+      </div>
+      <div class="card-body">
+        <div class="detail-section">
+          <div class="detail-label">Production Highlights</div>
+          <div class="detail-text">
+            <p><span class="highlight">Budino Base</span> — gelatin bloomed in ice water → milk, cream + brown sugar heated to simmer → egg yolks tempered in and cooked to 82°C → gelatin added → strained over <span class="highlight">caramelized white chocolate</span> → blended to emulsify → bourbon whisked in → set in jars.</p>
+            <p><span class="highlight">Brown Butter Caramel</span> — sugar + glucose + water caramelized → deglazed with heavy cream + brown butter → brought to simmer → salt whisked in.</p>
+            <p><span class="highlight">Vanilla Whip</span> — stabilized whipped cream: heavy cream, milk powder, powdered sugar, vanilla paste → stiff peaks.</p>
+            <p><span class="highlight">Brown Butter Macadamia Nuts</span> — chopped + roasted at 300°F 20 min → tossed warm in brown butter + sugar → cool to room temp.</p>
+          </div>
+        </div>
+        <div class="detail-section">
+          <div class="detail-label">Allergens</div>
+          <div class="allergen-list">
+            <span class="allergen-chip chip-no"><span class="dot"></span>DAIRY (custard, sauce) — no</span>
+            <span class="allergen-chip chip-no"><span class="dot"></span>EGG (custard) — no</span>
+            <span class="allergen-chip chip-yes"><span class="dot"></span>NUTS (macadamia) — yes</span>
+          </div>
+        </div>
+      </div>
+      <button class="expand-btn" onclick="toggleCard(this)">
+        Ingredient Notes <svg width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M2 4l4 4 4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </button>
+      <div class="expandable">
+        <div class="detail-section">
+          <div class="detail-label">Budino</div>
+          <div class="detail-text">Italian word for pudding/custard — richer and more decadent than American pudding. Uses egg yolks, cream + milk. Silky texture similar to mousse or flan.</div>
+        </div>
+        <div class="detail-section">
+          <div class="detail-label">Butterscotch</div>
+          <div class="detail-text">Primary ingredients: brown sugar + butter. Sugar is boiled to soft crack stage (not hard crack like toffee). Became famous in 1851 after Queen Victoria was presented a tin of S. Parkinson &amp; Sons' butterscotch when she visited Doncaster.</div>
+        </div>
+        <div class="detail-section">
+          <div class="detail-label">Brown Butter</div>
+          <div class="detail-text">Regular butter cooked slightly past melting point — just long enough to toast the milk solids. Releases a nutty flavor that adds an extra depth layer when substituted for regular butter.</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- CHEESECAKE -->
+    <div class="card" data-category="dessert">
+      <div class="card-header">
+        <div class="card-title">Stone Fruit New York Cheesecake</div>
+        <div class="card-price">$12</div>
+      </div>
+      <div class="card-sub">Peach Curd, Apricot Caramel, Market Stone Fruit</div>
+      <div class="card-tags">
+        <span class="tag section">Dessert</span>
+        <span class="tag mark">🍴 Fork</span>
+        <span class="tag replacing">↩ Blueberry Meyer Lemon Cheesecake</span>
+      </div>
+      <div class="card-body">
+        <div class="detail-section">
+          <div class="detail-label">Production Highlights</div>
+          <div class="detail-text">
+            <p><span class="highlight">Peach Lemon Curd</span> — white peach purée + meyer lemon concentrate heated with sugar + agar agar → eggs tempered in at 82°C → butter blended in until emulsified + smooth.</p>
+            <p><span class="highlight">Graham Cracker Crust</span> — crumbs + sugar + butter, pressed into ring, baked 300°F 12 min.</p>
+            <p><span class="highlight">New York Cheesecake Base</span> — sugar + flour blended into cream cheese, sugar, vanilla paste + heavy cream → eggs ber mixed in → built with 500g curd over crust, 1600g cheesecake base → baked 220°F fan speed 3, ~45 min → sour cream + sugar spread on top → bake 10 more min.</p>
+            <p><span class="highlight">Apricot Caramel</span> — sugar + water cooked to light amber → deglazed with apricot purée → <span class="highlight">umeshu wine</span> blended in → chilled.</p>
+          </div>
+        </div>
+        <div class="detail-section">
+          <div class="detail-label">Allergens</div>
+          <div class="allergen-list">
+            <span class="allergen-chip chip-no"><span class="dot"></span>GLUTEN (crust) — no</span>
+            <span class="allergen-chip chip-no"><span class="dot"></span>DAIRY (all) — no</span>
+            <span class="allergen-chip chip-no"><span class="dot"></span>EGG — no</span>
+          </div>
+        </div>
+      </div>
+      <button class="expand-btn" onclick="toggleCard(this)">
+        Ingredient Notes + Story <svg width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M2 4l4 4 4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </button>
+      <div class="expandable">
+        <div class="detail-section">
+          <div class="detail-label">NY Cheesecake Origin</div>
+          <div class="detail-text">Invented in Manhattan in the 1920s by Arnold Reuben. Distinguished from older recipes by swapping curd/ricotta for full-fat cream cheese. Extra egg yolks for smoothness, sour cream or heavy cream for the hallmark velvety weight + tangy finish.</div>
+        </div>
+        <div class="detail-section">
+          <div class="detail-label">Freestone vs Clingstone Peaches</div>
+          <div class="detail-text">Freestones: flesh separates readily from pit → preferred for eating fresh. Clingstones: flesh clings tightly → preferred for canning. Peaches and nectarines differ by only one gene — nectarines have smooth skin instead of fuzzy. Genetically identical otherwise; nectarines can grow on the same tree as peaches.</div>
+        </div>
+        <div class="detail-section">
+          <div class="detail-label">Umeshu</div>
+          <div class="detail-text">Japanese plum wine — made by steeping ume (Japanese plum) in shochu with sugar. Sweet, slightly tart, fruity. Adds a delicate, exotic acidity to the apricot caramel.</div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+</main>
+
+<footer>MB POST · Summer 2026 · FOH Reference · All items launch June 11</footer>
+
+<script>
+  function showSection(cat, btn) {
+    // nav buttons
+    document.querySelectorAll('nav button').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+
+    const blocks = document.querySelectorAll('.section-block');
+    blocks.forEach(block => {
+      if (cat === 'all') {
+        block.classList.add('visible');
+      } else {
+        const blockCat = block.dataset.category;
+        block.classList.toggle('visible', blockCat === cat);
+      }
+    });
+  }
+
+  function toggleCard(btn) {
+    btn.classList.toggle('open');
+    const expandable = btn.nextElementSibling;
+    expandable.classList.toggle('open');
+  }
+</script>
+</body>
+</html>
